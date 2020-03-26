@@ -9,7 +9,7 @@
 import React from 'react';
 import moment from 'moment';
 import { connect } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { Redirect, useParams } from 'react-router-dom';
 
 // Components
 import CircularGauge from '../../components/circulargauge';
@@ -84,6 +84,7 @@ const mapStateToProps = state => ({
   electricityMixMode: state.application.electricityMixMode,
   isMobile: state.application.isMobile,
   tableDisplayEmissions: state.application.tableDisplayEmissions,
+  zones: state.data.grid.zones,
 });
 
 const CountryPanel = ({
@@ -92,8 +93,13 @@ const CountryPanel = ({
   electricityMixMode,
   isMobile,
   tableDisplayEmissions,
+  zones,
 }) => {
   const { zoneId } = useParams();
+
+  if (!zones[zoneId]) {
+    return <Redirect to="/map" />;
+  }
 
   const { hasParser } = data;
   const datetime = data.stateDatetime || data.datetime;

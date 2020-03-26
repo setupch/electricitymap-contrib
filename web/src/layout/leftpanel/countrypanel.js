@@ -27,6 +27,7 @@ import { getCo2Scale } from '../../helpers/scales';
 import { flagUri } from '../../helpers/flags';
 import { getFullZoneName, __ } from '../../helpers/translation';
 import { co2Sub } from '../../helpers/formatting';
+import { navigateToURL } from '../../helpers/router';
 import { LOW_CARBON_INFO_TOOLTIP_KEY } from '../../helpers/constants';
 
 // TODO: Move all styles from styles.css to here
@@ -94,8 +95,7 @@ class Component extends React.PureComponent {
   }
 
   goBackToZonesList = () => {
-    this.props.dispatchApplication('selectedZoneName', null);
-    this.props.dispatchApplication('currentPage', this.props.isMobile ? 'ranking' : 'map');
+    navigateToURL(this.props.isMobile ? '/ranking' : '/map');
   }
 
   render() {

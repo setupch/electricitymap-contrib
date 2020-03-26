@@ -81,6 +81,7 @@ const mapStateToProps = state => ({
   countryCode: state.application.selectedZoneName || '',
   data: getCurrentZoneData(state) || {},
   electricityMixMode: state.application.electricityMixMode,
+  isMobile: state.application.isMobile,
   tableDisplayEmissions: state.application.tableDisplayEmissions,
 });
 const mapDispatchToProps = disp => ({
@@ -90,6 +91,11 @@ const mapDispatchToProps = disp => ({
 class Component extends React.PureComponent {
   toggleSource = () => {
     this.props.dispatchApplication('tableDisplayEmissions', !this.props.tableDisplayEmissions);
+  }
+
+  goBackToZonesList = () => {
+    this.props.dispatchApplication('selectedZoneName', null);
+    this.props.dispatchApplication('currentPage', this.props.isMobile ? 'ranking' : 'map');
   }
 
   render() {
@@ -112,7 +118,7 @@ class Component extends React.PureComponent {
       <div className="country-panel">
         <div id="country-table-header">
           <div className="left-panel-zone-details-toolbar">
-            <span className="left-panel-back-button">
+            <span className="left-panel-back-button" onClick={this.goBackToZonesList}>
               <i className="material-icons" aria-hidden="true">arrow_back</i>
             </span>
             <div className="country-name-time">

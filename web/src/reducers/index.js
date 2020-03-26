@@ -51,7 +51,7 @@ const initialApplicationState = {
   windEnabled: cookieGetBool('windEnabled', false),
 
   // TODO(olc): refactor this state
-  currentPage: 'map',
+  currentPage: null,
   // TODO(olc): move this to countryPanel once all React components have been made
   tableDisplayEmissions: false,
 };
@@ -78,7 +78,7 @@ const applicationReducer = (state = initialApplicationState, action) => {
         // TODO(olc): the page state should be inferred from selectedZoneName
         return Object.assign({}, state, {
           selectedZoneName: null,
-          currentPage: 'map',
+          currentPage: null,
         });
       }
       return state;
@@ -110,7 +110,7 @@ const applicationReducer = (state = initialApplicationState, action) => {
         useRemoteEndpoint: searchParams.get('remote') === 'true',
         windEnabled: searchParams.get('wind') === 'true',
         // Prioritize route pathname but fall back to search params for backwards compatibility
-        currentPage: pathname.split('/')[1] || currentPageFallback || 'map',
+        currentPage: pathname.split('/')[1] || currentPageFallback || null,
         selectedZoneName: pathname.split('/')[2] || searchParams.get('countryCode') || null,
       });
     }
